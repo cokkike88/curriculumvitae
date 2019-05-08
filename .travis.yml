@@ -1,0 +1,23 @@
+languaje: node_js
+cache:
+  directories:
+    - ~!@/.npm
+node_js:
+  - '9'
+git:
+  depth: 3
+script:
+  - yarn build
+  # LA LINEA DE ABAJO ES SI SE CUENTA CON UN DOMINIO
+  - echo 'url-personalizada.com' > public/CNAME
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  # ES EL NOMBRE DE LA VARIABLE QUE SE CREO EN Travis PARA EL TOKEN
+  github-token: $Github_token
+  local-dir: dist/
+  target-branch: master
+  commit_message: "Deploy release ${TRAVIS_TAG}"
+  on:
+    branch: develop
